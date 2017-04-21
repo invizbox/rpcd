@@ -7,7 +7,6 @@ ADD_DEFINITIONS(-Os -Wall -Werror --std=gnu99 -g3 -Wmissing-declarations)
 INCLUDE_DIRECTORIES(include)
 
 OPTION(FILE_SUPPORT "File plugin support" ON)
-OPTION(IWINFO_SUPPORT "libiwinfo plugin support" ON)
 OPTION(RPCSYS_SUPPORT "rpc-sys plugin support" ON)
 
 SET(CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "")
@@ -51,13 +50,6 @@ IF(RPCSYS_SUPPORT)
   ADD_LIBRARY(rpcsys_plugin MODULE sys.c)
   TARGET_LINK_LIBRARIES(rpcsys_plugin ubox ubus)
   SET_TARGET_PROPERTIES(rpcsys_plugin PROPERTIES OUTPUT_NAME rpcsys PREFIX "")
-ENDIF()
-
-IF (IWINFO_SUPPORT)
-  SET(PLUGINS ${PLUGINS} iwinfo_plugin)
-  ADD_LIBRARY(iwinfo_plugin MODULE iwinfo.c)
-  TARGET_LINK_LIBRARIES(iwinfo_plugin ubox ubus iwinfo)
-  SET_TARGET_PROPERTIES(iwinfo_plugin PROPERTIES OUTPUT_NAME iwinfo PREFIX "")
 ENDIF()
 
 INSTALL(TARGETS rpcd ${PLUGINS}
